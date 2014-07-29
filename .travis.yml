@@ -5,5 +5,7 @@ env:
   global:
   - TERM=dumb
   - secure: SWwAa/GpemL+p5fSOl7RJP3Kszz44F7WVKgvs9X9ojFTPjzTxQM23SB/NX5cwI8qryQjme/rkfKvTUauJgJ/odtI0ZvexZ5n+GINLZlePsadsNLa4Eq8JzU6Vlsbh59X+4sOOQ2f8YhhHiuEPWFMCx2wHnCn1M+y0kFHKhnNKpA=
+  - secure: WENACeEAzKOpYeI3MT/DgfntAFSO/C48Pcyicbe+XTCutGxqrKK1SuglA5YPCNMKqVliWVTx5evVIlLzaNotoNVclg6Y6+cBSMq0UUrOW5RWTtBs/z4sSmwY/P69ZqblBes2qEUFGJi0f/wxwCbqR4+PCLAd5REn2pEZbn5ECPk=
+  - secure: ElPzRL1PSgOsmoy/XAPSqFavJSLRl/iUuC05H2U7w25jJyfGfYGmsd5XhE35fznxFlIPGw1EoBc0vn+INWSdkKc/3znc1g6B1bbPRLSzc8nh2ImArW+p34Q7KlfeTpkz5mCZg7WYaVbEJbM7XNtaMY0VKk/fxuWZ01nrY5rvXZk=
 install:
 - ./gradlew clean test build publish publishBintray
