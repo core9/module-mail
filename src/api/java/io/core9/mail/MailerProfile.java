@@ -11,6 +11,8 @@ import io.core9.plugin.database.repository.CrudEntity;
 @Collection("configuration")
 public class MailerProfile extends AbstractCrudEntity implements CrudEntity {
 
+	private static final long serialVersionUID = -4075513825265134627L;
+	
 	private String host;
 	private String name;
 	private String configtype = "mailerprofile";

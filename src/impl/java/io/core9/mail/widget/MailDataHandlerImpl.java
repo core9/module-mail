@@ -3,6 +3,7 @@ package io.core9.mail.widget;
 import io.core9.mail.MailerPlugin;
 import io.core9.mail.MailerProfile;
 import io.core9.plugin.server.request.Request;
+import io.core9.plugin.template.closure.ClosureTemplateEngine;
 import io.core9.plugin.widgets.datahandler.DataHandler;
 import io.core9.plugin.widgets.datahandler.DataHandlerFactoryConfig;
 import io.core9.plugin.widgets.datahandler.factories.CustomVariable;
@@ -13,6 +14,7 @@ import java.util.Map;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import net.xeoh.plugins.base.annotations.PluginImplementation;
 import net.xeoh.plugins.base.annotations.injections.InjectPlugin;
@@ -22,6 +24,9 @@ public class MailDataHandlerImpl implements MailDataHandler<MailDataHandlerConfi
 	
 	@InjectPlugin
 	private MailerPlugin mailer;
+	
+	@InjectPlugin
+	private ClosureTemplateEngine engine;
 
 	@Override
 	public String getName() {
@@ -75,10 +80,14 @@ public class MailDataHandlerImpl implements MailDataHandler<MailDataHandlerConfi
 	protected void sendMail(final MailDataHandlerConfig config, final Request req) {
 		MailerProfile profile = mailer.getProfile(req.getVirtualHost(), config.getProfile());
 		Map<String,Object> body = req.getBodyAsMap().toBlocking().last();
-		Message message = mailer.create(profile);
+		MimeMessage message = (MimeMessage) mailer.create(profile);
 		try {
 			message.setSubject((String) body.getOrDefault("subject", config.getSubject()));
-			message.setText(body.toString());
+			try {
+				message.setText(engine.render(req.getVirtualHost(), config.getTemplate(), body), "utf-8", "html");
+			} catch (Exception e) {
+				message.setText(body.toString());
+			}
 			message.setFrom(new InternetAddress((String) body.getOrDefault("from", config.getFrom())));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(config.getTo()));
 			mailer.send(profile, message);

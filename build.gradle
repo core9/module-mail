@@ -25,5 +25,7 @@ dependencies {
 	apiCompile 'io.core9:module-widgets-api:+'
 	apiCompile 'javax.mail:mail:+'
 	
+	implCompile 'io.core9:module-template-engine-closure-api:+'
+	
 	testCompile 'io.core9:core:+'
 }

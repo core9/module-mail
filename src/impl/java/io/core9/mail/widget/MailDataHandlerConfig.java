@@ -8,6 +8,7 @@ public class MailDataHandlerConfig extends DataHandlerDefaultConfig {
 	private String to;
 	private String subject;
 	private String from;
+	private String template;
 
 	public String getProfile() {
 		return profile;
@@ -39,6 +40,14 @@ public class MailDataHandlerConfig extends DataHandlerDefaultConfig {
 	
 	public void setFrom(String from) {
 		this.from = from;
+	}
+	
+	public String getTemplate() {
+		return template;
+	}
+	
+	public void setTemplate(String template) {
+		this.template = template;
 	}
 
 }
