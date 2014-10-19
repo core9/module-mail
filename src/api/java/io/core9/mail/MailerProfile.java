@@ -11,19 +11,19 @@ import io.core9.plugin.database.repository.CrudEntity;
 @Collection("configuration")
 public class MailerProfile extends AbstractCrudEntity implements CrudEntity {
 
-	private static final long serialVersionUID = -4075513825265134627L;
+	private static final String CONFIG_TYPE = "MAILERPROFILE";
 	
 	private String host;
 	private String name;
-	private String configtype = "mailerprofile";
 	private int port;
 	private String type;
 	private boolean authentication;
 	private String username;
 	private String password;
+	private Map<String,Object> defaultSettings;
 
 	public String getConfigtype() {
-		return configtype;
+		return CONFIG_TYPE;
 	}
 
 	public String getHost() {
@@ -97,5 +97,13 @@ public class MailerProfile extends AbstractCrudEntity implements CrudEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Map<String,Object> getDefaultSettings() {
+		return defaultSettings;
+	}
+
+	public void setDefaultSettings(Map<String,Object> defaultSettings) {
+		this.defaultSettings = defaultSettings;
 	}
 }
