@@ -56,7 +56,7 @@ public class MailDataHandlerImpl implements MailDataHandler<MailDataHandlerConfi
 							if(var.isManual()) {
 								req.getResponse().addGlobal(var.getKey(), var.getValue());
 							} else {
-								req.getResponse().addGlobal(var.getKey(), req.getParams().get(var.getValue()));
+								req.getResponse().addGlobal(var.getKey(), req.getQueryParams().get(var.getValue()).getFirst());
 							}
 						}
 					}
