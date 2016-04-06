@@ -1,5 +1,14 @@
 package io.core9.mail.widget;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import io.core9.mail.MailerPlugin;
 import io.core9.mail.MailerProfile;
 import io.core9.plugin.server.request.Request;
@@ -7,15 +16,6 @@ import io.core9.plugin.template.closure.ClosureTemplateEngine;
 import io.core9.plugin.widgets.datahandler.DataHandler;
 import io.core9.plugin.widgets.datahandler.DataHandlerFactoryConfig;
 import io.core9.plugin.widgets.datahandler.factories.CustomVariable;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 import net.xeoh.plugins.base.annotations.PluginImplementation;
 import net.xeoh.plugins.base.annotations.injections.InjectPlugin;
 
@@ -88,7 +88,14 @@ public class MailDataHandlerImpl implements MailDataHandler<MailDataHandlerConfi
 			} catch (Exception e) {
 				message.setText(body.toString());
 			}
-			message.setFrom(new InternetAddress((String) body.getOrDefault("from", config.getFrom())));
+			message.setFrom(new InternetAddress(config.getFrom()));
+			if(config.getReplyTo() != null) {
+				try {
+					message.setReplyTo(InternetAddress.parse((String) body.getOrDefault("from", config.getReplyTo())));
+				} catch (AddressException e) {
+					message.setReplyTo(null);
+				}
+			}
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(config.getTo()));
 			mailer.send(profile, message);
 		} catch (MessagingException e) {

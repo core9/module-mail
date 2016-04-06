@@ -23,7 +23,7 @@ dependencies {
 	apiCompile 'io.core9:core-api:+'
 	apiCompile 'io.core9:module-database-api:+'
 	apiCompile 'io.core9:module-widgets-api:+'
-	apiCompile 'javax.mail:mail:+'
+	apiCompile 'javax.mail:mail:1.5.+'
 	
 	implCompile 'io.core9:module-template-engine-closure-api:+'
 	
