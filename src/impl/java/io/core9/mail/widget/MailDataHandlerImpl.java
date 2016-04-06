@@ -89,9 +89,10 @@ public class MailDataHandlerImpl implements MailDataHandler<MailDataHandlerConfi
 				message.setText(body.toString());
 			}
 			message.setFrom(new InternetAddress(config.getFrom()));
-			if(config.getReplyTo() != null) {
+			String replyTo = (String) body.getOrDefault("from", config.getReplyTo());
+			if(replyTo != null) {
 				try {
-					message.setReplyTo(InternetAddress.parse((String) body.getOrDefault("from", config.getReplyTo())));
+					message.setReplyTo(InternetAddress.parse(replyTo));
 				} catch (AddressException e) {
 					message.setReplyTo(null);
 				}
